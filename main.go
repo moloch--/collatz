@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math/big"
+	"os"
 	"time"
 )
 
@@ -12,6 +13,11 @@ func main() {
 	fmt.Printf("Start: ")
 	fmt.Scanf("%s", &raw)
 	startValue.SetString(raw, 10)
+
+	if startValue.Cmp(big.NewInt(0)) != 1 {
+		fmt.Printf("Starting value must be greater than 0\n")
+		os.Exit(1)
+	}
 
 	startTime := time.Now()
 	steps := collatz(startValue)
