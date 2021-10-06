@@ -7,6 +7,8 @@ import (
 )
 
 func main() {
+	largest := ""
+	largestSteps := uint64(0)
 	count := big.NewInt(1)
 	for {
 		count.Add(count, big.NewInt(1))
@@ -14,7 +16,11 @@ func main() {
 		value := big.NewInt(0)
 		value.Set(count)
 		steps := collatz(value)
-		fmt.Printf("\r%d Reached 1 in %d step(s) in %s       ", count, steps, time.Since(startTime))
+		fmt.Printf("\r\u001b[2K%s - %d reached 1 in %d step(s) in %s", largest, count, steps, time.Since(startTime))
+		if largestSteps < steps {
+			largestSteps = steps
+			largest = fmt.Sprintf("largest: %d (%d steps)", count, steps)
+		}
 	}
 }
 
